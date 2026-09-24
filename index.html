@@ -1,0 +1,6745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
+
+<title>A little something</title>
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: #07111c;
+}
+
+body {
+  user-select: none;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+.start-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 38%,
+      #1d3248,
+      #08111d 68%
+    );
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+.start-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.start-screen h1 {
+  margin-bottom: 28px;
+
+  color: white;
+
+  font-size:
+    clamp(36px, 5vw, 64px);
+
+  font-weight: 400;
+
+  letter-spacing: -2px;
+}
+
+.open-btn {
+  padding: 13px 32px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.2);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(255,255,255,.08);
+
+  backdrop-filter: blur(12px);
+
+  cursor: pointer;
+
+  transition: .25s ease;
+}
+
+.open-btn:hover {
+  transform: translateY(-3px);
+
+  background:
+    rgba(255,255,255,.14);
+}
+
+
+/* =========================================================
+   WORLD
+========================================================= */
+
+.world {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: #07111c;
+}
+
+
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.caption {
+  position: absolute;
+
+  top: 6%;
+  left: 50%;
+
+  z-index: 9000;
+
+  width:
+    min(
+      760px,
+      calc(100% - 40px)
+    );
+
+  color:
+    rgba(255,255,255,.95);
+
+  text-align: center;
+
+  font-size:
+    clamp(18px, 2vw, 27px);
+
+  font-weight: 300;
+
+  text-shadow:
+    0 4px 22px
+    rgba(0,0,0,.65);
+
+  opacity: 0;
+
+  transform:
+    translateX(-50%)
+    translateY(10px);
+
+  transition:
+    opacity .65s ease,
+    transform .65s ease;
+}
+
+.caption.show {
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* =========================================================
+   LIGHTNING
+========================================================= */
+
+.flash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9800;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background: #edf4ff;
+}
+
+.flash.active {
+  animation:
+    lightningFlash .65s ease;
+}
+
+@keyframes lightningFlash {
+
+  0% {
+    opacity: 0;
+  }
+
+  8% {
+    opacity: .8;
+  }
+
+  18% {
+    opacity: .07;
+  }
+
+  30% {
+    opacity: .5;
+  }
+
+  43% {
+    opacity: .03;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================================================
+   ROOM
+========================================================= */
+
+.room {
+  position: absolute;
+  inset: 0;
+
+  z-index: 100;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #172638 0%,
+      #1b293b 69%,
+      #4a3225 69%,
+      #332219 100%
+    );
+
+  transition:
+    opacity 1.25s ease,
+    transform 1.25s ease;
+}
+
+.room.hide {
+  opacity: 0;
+
+  transform: scale(1.03);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   WINDOW
+========================================================= */
+
+.window {
+  position: absolute;
+
+  left: 6%;
+  top: 11%;
+
+  width:
+    min(
+      35vw,
+      450px
+    );
+
+  height:
+    min(
+      45vh,
+      380px
+    );
+
+  overflow: hidden;
+
+  border:
+    10px solid #765840;
+
+  border-radius: 17px;
+
+  background: #07111d;
+
+  box-shadow:
+    0 25px 60px
+    rgba(0,0,0,.35);
+}
+
+.window-sky {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #06101c,
+      #11273e 64%,
+      #233e50
+    );
+}
+
+.window-hill {
+  position: absolute;
+
+  left: -10%;
+  bottom: -20px;
+
+  z-index: 2;
+
+  width: 120%;
+  height: 38%;
+
+  border-radius:
+    50% 50% 0 0;
+
+  background: #13251c;
+}
+
+.window-v {
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+  bottom: 0;
+
+  z-index: 20;
+
+  width: 8px;
+
+  transform:
+    translateX(-50%);
+
+  background: #765840;
+}
+
+.window-h {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  z-index: 20;
+
+  height: 8px;
+
+  transform:
+    translateY(-50%);
+
+  background: #765840;
+}
+
+#windowRain {
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   WORKSTATION
+========================================================= */
+
+.workstation {
+  position: absolute;
+
+  right: 4%;
+  bottom: 1%;
+
+  z-index: 50;
+
+  width: 650px;
+  height: 440px;
+}
+
+
+/* =========================================================
+   CHAIR
+   FIXED POSITION
+========================================================= */
+
+.chair {
+  position: absolute;
+
+  left: 58px;
+  top: 128px;
+
+  z-index: 8;
+
+  width: 110px;
+  height: 170px;
+}
+
+.chair-back {
+  position: absolute;
+
+  left: 12px;
+  top: 0;
+
+  width: 62px;
+  height: 78px;
+
+  border:
+    3px solid #15191f;
+
+  border-radius:
+    14px 14px 8px 8px;
+
+  background:
+    linear-gradient(
+      #303740,
+      #20252c
+    );
+}
+
+.chair-seat {
+  position: absolute;
+
+  left: 0;
+  top: 76px;
+
+  width: 98px;
+  height: 16px;
+
+  border:
+    3px solid #15191f;
+
+  border-radius: 8px;
+
+  background: #20252c;
+}
+
+.chair-post {
+  position: absolute;
+
+  left: 44px;
+  top: 90px;
+
+  width: 6px;
+  height: 48px;
+
+  background: #171b20;
+}
+
+.chair-base {
+  position: absolute;
+
+  left: 12px;
+  top: 136px;
+
+  width: 70px;
+  height: 6px;
+
+  border-radius: 8px;
+
+  background: #171b20;
+}
+
+.chair-base::before,
+.chair-base::after {
+  content: "";
+
+  position: absolute;
+
+  top: -2px;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #101419;
+}
+
+.chair-base::before {
+  left: -3px;
+}
+
+.chair-base::after {
+  right: -3px;
+}
+
+
+/* =========================================================
+   COMMON GLASSES
+========================================================= */
+
+.glass {
+  position: absolute;
+
+  top: 0;
+
+  width: 19px;
+  height: 15px;
+
+  border:
+    3px solid #111;
+
+  border-radius: 5px;
+}
+
+.glass.left {
+  left: 0;
+}
+
+.glass.right {
+  right: 0;
+}
+
+.bridge {
+  position: absolute;
+
+  left: 19px;
+  top: 6px;
+
+  width: 10px;
+  height: 3px;
+
+  background: #111;
+}
+
+
+/* =========================================================
+   SEATED CHARACTER
+========================================================= */
+
+.seated-guy {
+  position: absolute;
+
+  left: 92px;
+  top: 58px;
+
+  z-index: 31;
+
+  width: 140px;
+  height: 285px;
+
+  transition:
+    opacity .4s ease;
+}
+
+.seated-guy.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+
+/* head */
+
+.seated-head {
+  position: absolute;
+
+  left: 44px;
+  top: 0;
+
+  z-index: 8;
+
+  width: 54px;
+  height: 57px;
+
+  border:
+    4px solid #111;
+
+  border-radius: 48%;
+
+  background: #c99172;
+
+  transition:
+    transform .4s ease;
+}
+
+.seated-hair {
+  position: absolute;
+
+  left: 45px;
+  top: -7px;
+
+  z-index: 9;
+
+  width: 46px;
+  height: 17px;
+
+  border-radius:
+    70% 40% 30% 15%;
+
+  background: #111;
+
+  transform:
+    rotate(-5deg);
+}
+
+.seated-glasses {
+  position: absolute;
+
+  left: 46px;
+  top: 19px;
+
+  z-index: 10;
+
+  width: 49px;
+  height: 19px;
+}
+
+
+/* body */
+
+.seated-body {
+  position: absolute;
+
+  left: 43px;
+  top: 54px;
+
+  z-index: 6;
+
+  width: 57px;
+  height: 80px;
+
+  border:
+    3px solid #111;
+
+  border-radius:
+    12px 12px 8px 8px;
+
+  background:
+    linear-gradient(
+      #465f79,
+      #293e54
+    );
+}
+
+.seated-body::before {
+  content: "</>";
+
+  position: absolute;
+
+  left: 13px;
+  top: 25px;
+
+  color:
+    rgba(255,255,255,.72);
+
+  font-family: monospace;
+
+  font-size: 13px;
+}
+
+
+/* arms */
+
+.seated-arm {
+  position: absolute;
+
+  top: 69px;
+
+  z-index: 7;
+
+  width: 6px;
+  height: 70px;
+
+  border-radius: 7px;
+
+  background: #111;
+
+  transform-origin: top;
+}
+
+.seated-arm.left {
+  left: 48px;
+
+  transform:
+    rotate(-63deg);
+}
+
+.seated-arm.right {
+  left: 94px;
+
+  transform:
+    rotate(-47deg);
+}
+
+.seated-guy.typing
+.seated-arm.left {
+  animation:
+    typingLeft .18s
+    infinite alternate;
+}
+
+.seated-guy.typing
+.seated-arm.right {
+  animation:
+    typingRight .21s
+    infinite alternate;
+}
+
+@keyframes typingLeft {
+
+  from {
+    transform:
+      rotate(-63deg);
+  }
+
+  to {
+    transform:
+      rotate(-59deg);
+  }
+
+}
+
+@keyframes typingRight {
+
+  from {
+    transform:
+      rotate(-47deg);
+  }
+
+  to {
+    transform:
+      rotate(-43deg);
+  }
+
+}
+
+
+/* =========================================================
+   CLEAN SITTING LEGS
+   NO UGLY THIGH LINES
+========================================================= */
+
+.seated-thigh {
+  display: none;
+}
+
+
+/*
+   These start underneath the desk.
+   Desk hides where they connect to the body.
+*/
+
+.seated-shin {
+  position: absolute;
+
+  z-index: 12;
+
+  width: 7px;
+  height: 55px;
+
+  border-radius: 7px;
+
+  background: #111;
+}
+
+.seated-shin.left {
+  left: 86px;
+  top: 160px;
+}
+
+.seated-shin.right {
+  left: 104px;
+  top: 160px;
+}
+
+.seated-shoe {
+  position: absolute;
+
+  z-index: 12;
+
+  width: 24px;
+  height: 8px;
+
+  border-radius: 8px;
+
+  background: #111;
+}
+
+.seated-shoe.left {
+  left: 77px;
+  top: 213px;
+}
+
+.seated-shoe.right {
+  left: 95px;
+  top: 213px;
+}
+
+
+/* =========================================================
+   PHONE CHECK POSE
+========================================================= */
+
+.seated-guy.check-phone
+.seated-head {
+  transform:
+    rotate(8deg)
+    translateY(3px);
+}
+
+.seated-guy.check-phone
+.seated-arm.left {
+  animation: none;
+
+  transform:
+    rotate(-18deg);
+}
+
+.seated-guy.check-phone
+.seated-arm.right {
+  animation: none;
+
+  transform:
+    rotate(-12deg);
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+.laptop-wrap {
+  position: absolute;
+
+  left: 232px;
+  top: 75px;
+
+  z-index: 46;
+
+  width: 245px;
+  height: 140px;
+
+  perspective: 1000px;
+}
+
+.laptop {
+  position: relative;
+
+  width: 235px;
+  height: 138px;
+
+  transform:
+    perspective(1000px)
+    rotateY(43deg);
+
+  transform-origin:
+    left bottom;
+}
+
+.laptop-screen {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 208px;
+  height: 120px;
+
+  border:
+    8px solid #151a20;
+
+  border-radius:
+    10px 10px 5px 5px;
+
+  background:
+    linear-gradient(
+      #111c28,
+      #09121c
+    );
+}
+
+.code {
+  position: absolute;
+
+  left: 16px;
+
+  height: 5px;
+
+  border-radius: 3px;
+
+  background: #69b9d8;
+}
+
+.code.one {
+  top: 20px;
+  width: 80px;
+}
+
+.code.two {
+  top: 34px;
+  width: 125px;
+
+  background: #68bd93;
+}
+
+.code.three {
+  top: 48px;
+  width: 96px;
+}
+
+.code.four {
+  top: 62px;
+  width: 137px;
+
+  background: #dca66a;
+}
+
+.code.five {
+  top: 76px;
+  width: 68px;
+}
+
+.code.six {
+  top: 90px;
+  width: 111px;
+
+  background: #8c83c7;
+}
+
+.cursor {
+  position: absolute;
+
+  left: 126px;
+  top: 88px;
+
+  width: 2px;
+  height: 10px;
+
+  background: white;
+
+  animation:
+    cursorBlink .8s
+    steps(1)
+    infinite;
+}
+
+@keyframes cursorBlink {
+
+  50% {
+    opacity: 0;
+  }
+
+}
+
+.laptop-base {
+  position: absolute;
+
+  left: -11px;
+  top: 116px;
+
+  width: 228px;
+  height: 13px;
+
+  border-radius:
+    2px 2px 12px 12px;
+
+  background: #292f36;
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+.phone {
+  position: absolute;
+
+  left: 505px;
+  top: 151px;
+
+  z-index: 72;
+
+  width: 31px;
+  height: 55px;
+
+  border:
+    4px solid #101318;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      #1c2737,
+      #10161f
+    );
+
+  transform:
+    rotate(8deg);
+
+  transition:
+    left .5s ease,
+    top .5s ease,
+    transform .5s ease;
+}
+
+.phone::before {
+  content: "";
+
+  position: absolute;
+
+  left: 7px;
+  top: 2px;
+
+  width: 10px;
+  height: 2px;
+
+  border-radius: 4px;
+
+  background:
+    rgba(255,255,255,.3);
+}
+
+.phone.vibrate {
+  animation:
+    phoneVibrate .11s linear
+    7;
+}
+
+@keyframes phoneVibrate {
+
+  0% {
+    transform:
+      rotate(8deg)
+      translateX(0);
+  }
+
+  30% {
+    transform:
+      rotate(5deg)
+      translateX(-2px);
+  }
+
+  70% {
+    transform:
+      rotate(11deg)
+      translateX(2px);
+  }
+
+  100% {
+    transform:
+      rotate(8deg);
+  }
+
+}
+
+.phone.in-hand {
+  left: 180px;
+  top: 136px;
+
+  transform:
+    rotate(-10deg)
+    scale(1.07);
+}
+
+
+/*
+   Gone permanently after desk scene.
+*/
+
+.phone.gone {
+  display: none !important;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification {
+  position: absolute;
+
+  left: 120px;
+  top: 2px;
+
+  z-index: 180;
+
+  width: 285px;
+
+  padding:
+    14px 17px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(247,250,255,.96);
+
+  color: #202630;
+
+  box-shadow:
+    0 18px 48px
+    rgba(0,0,0,.25);
+
+  opacity: 0;
+
+  transform:
+    translateY(10px)
+    scale(.95);
+
+  transition:
+    opacity .45s ease,
+    transform .45s ease;
+}
+
+.notification.show {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.notification strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 14px;
+}
+
+.notification span {
+  color: #606772;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   DESK
+
+   Desk hides top of lower legs naturally.
+========================================================= */
+
+.desk-top {
+  position: absolute;
+
+  left: 20px;
+  top: 206px;
+
+  z-index: 40;
+
+  width: 610px;
+  height: 20px;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      #966b4b,
+      #60422f
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(0,0,0,.25);
+}
+
+.desk-leg {
+  position: absolute;
+
+  top: 224px;
+
+  z-index: 14;
+
+  width: 18px;
+  height: 190px;
+
+  background: #4a3225;
+}
+
+.desk-leg.left {
+  left: 65px;
+}
+
+.desk-leg.right {
+  right: 45px;
+}
+
+
+/* =========================================================
+   IDEA BULB
+
+   No flower / rose clue.
+========================================================= */
+
+.idea-bulb {
+  position: absolute;
+
+  right: 23%;
+  top: 18%;
+
+  z-index: 350;
+
+  width: 60px;
+  height: 65px;
+
+  opacity: 0;
+
+  transform:
+    scale(.35)
+    rotate(-15deg);
+
+  transition:
+    opacity .35s ease,
+    transform .5s
+    cubic-bezier(
+      .2,
+      1.6,
+      .4,
+      1
+    );
+}
+
+.idea-bulb.show {
+  opacity: 1;
+
+  transform:
+    scale(1)
+    rotate(0);
+}
+
+.bulb-circle {
+  position: absolute;
+
+  left: 7px;
+  top: 0;
+
+  width: 45px;
+  height: 45px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 38% 28%,
+      white,
+      #ffe55d 52%,
+      #f5b52a
+    );
+
+  box-shadow:
+    0 0 28px
+    rgba(255,221,64,.9);
+
+  animation:
+    bulbPulse .7s
+    infinite alternate;
+}
+
+.bulb-circle::after {
+  content: "";
+
+  position: absolute;
+
+  left: 15px;
+  bottom: -10px;
+
+  width: 15px;
+  height: 12px;
+
+  border-radius:
+    2px 2px 5px 5px;
+
+  background: #777;
+}
+
+@keyframes bulbPulse {
+
+  to {
+    box-shadow:
+      0 0 40px
+      rgba(255,221,64,1);
+  }
+
+}
+
+
+/* =========================================================
+   THOUGHT
+========================================================= */
+
+.thought {
+  position: absolute;
+
+  right: 18%;
+  top: 13%;
+
+  z-index: 400;
+
+  width:
+    min(
+      280px,
+      31vw
+    );
+
+  padding:
+    18px 21px;
+
+  border-radius: 25px;
+
+  background:
+    rgba(255,255,255,.96);
+
+  color: #252b32;
+
+  text-align: center;
+
+  font-size:
+    clamp(14px, 1.2vw, 17px);
+
+  line-height: 1.45;
+
+  box-shadow:
+    0 18px 50px
+    rgba(0,0,0,.24);
+
+  opacity: 0;
+
+  transform:
+    scale(.94)
+    translateY(10px);
+
+  transition:
+    opacity .5s ease,
+    transform .5s ease,
+    left .6s ease,
+    right .6s ease;
+}
+
+.thought.show {
+  opacity: 1;
+
+  transform:
+    scale(1)
+    translateY(0);
+}
+
+.thought.window-position {
+  left: 24%;
+  right: auto;
+}
+
+.thought.sad {
+  background: #edf2f6;
+
+  color: #3d4954;
+}
+
+.thought::before {
+  content: "";
+
+  position: absolute;
+
+  left: 31px;
+  bottom: -17px;
+
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+
+  background: inherit;
+}
+
+.thought::after {
+  content: "";
+
+  position: absolute;
+
+  left: 17px;
+  bottom: -31px;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: inherit;
+}
+
+
+/* =========================================================
+   ROOM WALKER
+   Separate from seated character.
+========================================================= */
+
+.room-walker {
+  position: absolute;
+
+  right: 20%;
+  bottom: 17%;
+
+  z-index: 120;
+
+  width: 120px;
+  height: 220px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    left 1.9s linear,
+    right 1.9s linear,
+    opacity .4s ease,
+    transform .5s ease;
+}
+
+.room-walker.show {
+  opacity: 1;
+}
+
+.room-walker.to-window {
+  right: auto;
+
+  left: 26%;
+}
+
+.room-walker.at-window {
+  right: auto;
+
+  left: 26%;
+
+  transform:
+    rotate(-4deg);
+}
+
+
+/* room head */
+
+.room-head {
+  position: absolute;
+
+  left: 35px;
+  top: 0;
+
+  width: 50px;
+  height: 52px;
+
+  border:
+    4px solid #111;
+
+  border-radius: 50%;
+
+  background: #c99172;
+}
+
+.room-hair {
+  position: absolute;
+
+  left: 36px;
+  top: -5px;
+
+  width: 41px;
+  height: 15px;
+
+  border-radius:
+    70% 40% 25% 15%;
+
+  background: #111;
+}
+
+.room-glasses {
+  position: absolute;
+
+  left: 37px;
+  top: 18px;
+
+  width: 45px;
+  height: 18px;
+}
+
+.room-glasses
+.glass {
+  width: 17px;
+  height: 14px;
+}
+
+
+/* room body */
+
+.room-body {
+  position: absolute;
+
+  left: 37px;
+  top: 51px;
+
+  width: 46px;
+  height: 78px;
+
+  border:
+    4px solid #111;
+
+  border-radius:
+    11px 11px 7px 7px;
+
+  background:
+    linear-gradient(
+      #425975,
+      #293c52
+    );
+}
+
+.room-body::before {
+  content: "</>";
+
+  position: absolute;
+
+  left: 8px;
+  top: 25px;
+
+  color:
+    rgba(255,255,255,.7);
+
+  font-family: monospace;
+
+  font-size: 11px;
+}
+
+
+/* room arms */
+
+.room-arm {
+  position: absolute;
+
+  top: 62px;
+
+  width: 6px;
+  height: 62px;
+
+  border-radius: 7px;
+
+  background: #111;
+
+  transform-origin: top;
+}
+
+.room-arm.left {
+  left: 40px;
+
+  transform:
+    rotate(32deg);
+}
+
+.room-arm.right {
+  left: 79px;
+
+  transform:
+    rotate(-32deg);
+}
+
+
+/* room legs */
+
+.room-leg {
+  position: absolute;
+
+  top: 126px;
+
+  width: 7px;
+  height: 77px;
+
+  border-radius: 7px;
+
+  background: #111;
+
+  transform-origin: top;
+}
+
+.room-leg.left {
+  left: 52px;
+
+  transform:
+    rotate(6deg);
+}
+
+.room-leg.right {
+  left: 69px;
+
+  transform:
+    rotate(-6deg);
+}
+
+.room-shoe {
+  position: absolute;
+
+  top: 199px;
+
+  width: 27px;
+  height: 8px;
+
+  border-radius: 8px;
+
+  background: #111;
+}
+
+.room-shoe.left {
+  left: 46px;
+}
+
+.room-shoe.right {
+  left: 65px;
+}
+
+
+/* walking */
+
+.room-walker.walking
+.room-leg.left {
+  animation:
+    roomLegLeft .42s
+    infinite alternate;
+}
+
+.room-walker.walking
+.room-leg.right {
+  animation:
+    roomLegRight .42s
+    infinite alternate;
+}
+
+.room-walker.walking
+.room-arm.left {
+  animation:
+    roomArmLeft .42s
+    infinite alternate;
+}
+
+.room-walker.walking
+.room-arm.right {
+  animation:
+    roomArmRight .42s
+    infinite alternate;
+}
+
+.room-walker.walking {
+  animation:
+    roomBob .42s
+    infinite alternate;
+}
+
+@keyframes roomLegLeft {
+
+  from {
+    transform:
+      rotate(25deg);
+  }
+
+  to {
+    transform:
+      rotate(-22deg);
+  }
+
+}
+
+@keyframes roomLegRight {
+
+  from {
+    transform:
+      rotate(-25deg);
+  }
+
+  to {
+    transform:
+      rotate(22deg);
+  }
+
+}
+
+@keyframes roomArmLeft {
+
+  from {
+    transform:
+      rotate(-22deg);
+  }
+
+  to {
+    transform:
+      rotate(28deg);
+  }
+
+}
+
+@keyframes roomArmRight {
+
+  from {
+    transform:
+      rotate(22deg);
+  }
+
+  to {
+    transform:
+      rotate(-28deg);
+  }
+
+}
+
+@keyframes roomBob {
+
+  to {
+    translate:
+      0 -2px;
+  }
+
+}
+
+
+/* =========================================================
+   OUTSIDE
+========================================================= */
+
+.outside {
+  position: absolute;
+  inset: 0;
+
+  z-index: 500;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #07111d 0%,
+      #10263b 54%,
+      #21372c 100%
+    );
+
+  transition:
+    opacity 1.4s ease,
+    background 4s ease;
+}
+
+.outside.show {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+.outside.clear {
+  background:
+    linear-gradient(
+      to bottom,
+      #20364b,
+      #6a5868 46%,
+      #c88172 70%,
+      #405b40
+    );
+}
+
+#outsideRain {
+  position: absolute;
+  inset: 0;
+
+  z-index: 180;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  transition:
+    opacity 3s ease;
+}
+
+.outside.clear
+#outsideRain {
+  opacity: 0;
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.cloud {
+  position: absolute;
+
+  width: 220px;
+  height: 62px;
+
+  border-radius: 999px;
+
+  background: #121d29;
+
+  opacity: .87;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: inherit;
+}
+
+.cloud::before {
+  left: 28px;
+  top: -47px;
+
+  width: 100px;
+  height: 100px;
+}
+
+.cloud::after {
+  right: 18px;
+  top: -63px;
+
+  width: 125px;
+  height: 125px;
+}
+
+.cloud.one {
+  top: 12%;
+  left: -250px;
+
+  animation:
+    cloudOne 30s
+    linear infinite;
+}
+
+.cloud.two {
+  top: 7%;
+  left: 58%;
+
+  transform: scale(.8);
+
+  animation:
+    cloudTwo 35s
+    linear infinite;
+}
+
+.cloud.three {
+  top: 25%;
+  left: 17%;
+
+  transform: scale(.65);
+
+  animation:
+    cloudThree 40s
+    linear infinite;
+}
+
+@keyframes cloudOne {
+
+  to {
+    left: 110%;
+  }
+
+}
+
+@keyframes cloudTwo {
+
+  to {
+    left: -300px;
+  }
+
+}
+
+@keyframes cloudThree {
+
+  to {
+    left: 105%;
+  }
+
+}
+
+.outside.clear
+.cloud {
+  opacity: .12;
+}
+
+
+/* =========================================================
+   LAND
+========================================================= */
+
+.far-hill {
+  position: absolute;
+
+  left: -10%;
+  bottom: 20%;
+
+  width: 120%;
+  height: 28%;
+
+  border-radius:
+    50% 50% 0 0;
+
+  background: #101e20;
+
+  opacity: .76;
+}
+
+.near-hill {
+  position: absolute;
+
+  left: -10%;
+  bottom: 13%;
+
+  width: 120%;
+  height: 22%;
+
+  border-radius:
+    50% 50% 0 0;
+
+  background: #14291f;
+}
+
+.ground {
+  position: absolute;
+
+  left: -5%;
+  bottom: -9%;
+
+  z-index: 5;
+
+  width: 110%;
+  height: 31%;
+
+  border-radius:
+    48% 48% 0 0;
+
+  background:
+    linear-gradient(
+      #203729,
+      #0c1e15
+    );
+}
+
+
+/* =========================================================
+   ROAD
+========================================================= */
+
+.road {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: 12vh;
+
+  z-index: 15;
+
+  height: 66px;
+
+  background:
+    linear-gradient(
+      #41484e,
+      #292e33
+    );
+}
+
+.road::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 2px;
+
+  background:
+    repeating-linear-gradient(
+      to right,
+      rgba(255,255,255,.18)
+      0 47px,
+      transparent
+      47px 87px
+    );
+}
+
+
+/* =========================================================
+   PUDDLE
+========================================================= */
+
+.puddle {
+  position: absolute;
+
+  left: 34%;
+  bottom:
+    calc(
+      12vh + 6px
+    );
+
+  z-index: 18;
+
+  width: 190px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(142,196,227,.48),
+      rgba(58,105,140,.13)
+    );
+}
+
+.puddle::before {
+  content: "";
+
+  position: absolute;
+
+  left: 45px;
+  top: 8px;
+
+  width: 90px;
+  height: 2px;
+
+  border-radius: 100%;
+
+  background:
+    rgba(255,255,255,.22);
+}
+
+
+/* =========================================================
+   SPLASH
+========================================================= */
+
+.splash {
+  position: absolute;
+
+  left: 37%;
+  bottom:
+    calc(
+      12vh + 13px
+    );
+
+  z-index: 270;
+
+  width: 115px;
+  height: 75px;
+
+  opacity: 0;
+}
+
+.splash.active {
+  animation:
+    splashAnimation .85s ease;
+}
+
+.drop {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 10px;
+  height: 21px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(146,203,233,.7);
+}
+
+.drop:nth-child(1) {
+  left: 5px;
+}
+
+.drop:nth-child(2) {
+  left: 35px;
+}
+
+.drop:nth-child(3) {
+  left: 68px;
+}
+
+.drop:nth-child(4) {
+  left: 98px;
+}
+
+@keyframes splashAnimation {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      scale(.3);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  65% {
+    transform:
+      translateY(-28px)
+      scale(1.4);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-42px)
+      scale(1.6);
+  }
+
+}
+
+
+/* =========================================================
+   CRACK
+========================================================= */
+
+.crack {
+  position: absolute;
+
+  left: 39%;
+  bottom:
+    calc(
+      12vh + 108px
+    );
+
+  z-index: 650;
+
+  padding:
+    8px 15px;
+
+  border:
+    3px solid #6d1d1d;
+
+  border-radius: 11px;
+
+  color: white;
+
+  background: #d94b4b;
+
+  font-family:
+    "Arial Black",
+    Arial;
+
+  font-size:
+    clamp(19px, 2.3vw, 31px);
+
+  opacity: 0;
+
+  transform:
+    rotate(-8deg)
+    scale(.3);
+}
+
+.crack.show {
+  animation:
+    crackPop .9s ease;
+}
+
+@keyframes crackPop {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      rotate(-8deg)
+      scale(.3);
+  }
+
+  35% {
+    opacity: 1;
+
+    transform:
+      rotate(8deg)
+      scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+
+    transform:
+      rotate(-5deg)
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================================================
+   OUTDOOR CHARACTER
+========================================================= */
+
+.walker {
+  position: absolute;
+
+  left: -170px;
+
+  bottom:
+    calc(
+      12vh + 39px
+    );
+
+  z-index: 260;
+
+  width: 120px;
+  height: 205px;
+
+  transition:
+    left 4s linear,
+    bottom 1.4s ease,
+    opacity 1s ease;
+}
+
+.walker.to-puddle {
+  left: 32%;
+}
+
+.walker.after-puddle {
+  left: 47%;
+}
+
+.walker.to-farm {
+  left: 61%;
+}
+
+.walker.at-rose {
+  left: 74%;
+}
+
+.walker.return {
+  left:
+    calc(
+      50% - 60px
+    );
+
+  bottom: 13vh;
+}
+
+.walker-rig {
+  position: absolute;
+  inset: 0;
+
+  transform-origin:
+    bottom center;
+
+  transition:
+    transform .7s ease;
+}
+
+
+/* head */
+
+.walker-head {
+  position: absolute;
+
+  left: 35px;
+  top: 2px;
+
+  width: 49px;
+  height: 51px;
+
+  border:
+    4px solid #111;
+
+  border-radius: 50%;
+
+  background: #c99172;
+}
+
+.walker-hair {
+  position: absolute;
+
+  left: 36px;
+  top: -4px;
+
+  width: 40px;
+  height: 15px;
+
+  border-radius:
+    70% 40% 25% 15%;
+
+  background: #111;
+}
+
+.walker-glasses {
+  position: absolute;
+
+  left: 37px;
+  top: 20px;
+
+  width: 45px;
+  height: 18px;
+}
+
+.walker-glasses
+.glass {
+  width: 17px;
+  height: 14px;
+}
+
+
+/* body */
+
+.walker-body {
+  position: absolute;
+
+  left: 37px;
+  top: 51px;
+
+  width: 46px;
+  height: 77px;
+
+  border:
+    4px solid #111;
+
+  border-radius:
+    11px 11px 7px 7px;
+
+  background:
+    linear-gradient(
+      #425975,
+      #293c52
+    );
+}
+
+.walker-body::before {
+  content: "</>";
+
+  position: absolute;
+
+  left: 8px;
+  top: 25px;
+
+  color:
+    rgba(255,255,255,.7);
+
+  font-family: monospace;
+
+  font-size: 11px;
+}
+
+
+/* arms */
+
+.walk-arm {
+  position: absolute;
+
+  top: 62px;
+
+  width: 6px;
+  height: 61px;
+
+  border-radius: 7px;
+
+  background: #111;
+
+  transform-origin: top;
+}
+
+.walk-arm.left {
+  left: 40px;
+
+  transform:
+    rotate(38deg);
+}
+
+.walk-arm.right {
+  left: 79px;
+
+  height: 56px;
+
+  transform:
+    rotate(-7deg);
+}
+
+.umbrella-hand {
+  position: absolute;
+
+  left: 75px;
+  top: 111px;
+
+  z-index: 35;
+
+  width: 13px;
+  height: 13px;
+
+  border:
+    3px solid #111;
+
+  border-radius: 50%;
+
+  background: #c99172;
+}
+
+
+/* =========================================================
+   LEGS
+========================================================= */
+
+.walk-leg {
+  position: absolute;
+
+  top: 124px;
+  left: 58px;
+
+  width: 6px;
+  height: 70px;
+
+  border-radius: 7px;
+
+  background: #111;
+
+  transform-origin: top;
+
+  overflow: visible;
+}
+
+.walk-leg.left {
+  transform:
+    rotate(25deg);
+}
+
+.walk-leg.right {
+  transform:
+    rotate(-25deg);
+}
+
+
+/* =========================================================
+   BANDAGE
+   INSIDE THE LEG = NO FLOATING WHITE RECTANGLE
+========================================================= */
+
+.bandage {
+  position: absolute;
+
+  left: -5px;
+  top: 28px;
+
+  z-index: 5;
+
+  width: 16px;
+  height: 23px;
+
+  border:
+    1px solid #c8c5bb;
+
+  border-radius: 4px;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #f2efe6 0 4px,
+      #d9d6cc 4px 7px
+    );
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+.walker-rig.injured
+.walk-leg.left
+.bandage {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* =========================================================
+   NORMAL WALK
+========================================================= */
+
+.walker-rig.walking:not(.injured)
+.walk-leg.left {
+  animation:
+    walkLegLeft .4s
+    infinite alternate;
+}
+
+.walker-rig.walking:not(.injured)
+.walk-leg.right {
+  animation:
+    walkLegRight .4s
+    infinite alternate;
+}
+
+.walker-rig.walking:not(.injured)
+.walk-arm.left {
+  animation:
+    walkArm .4s
+    infinite alternate;
+}
+
+.walker-rig.walking:not(.injured) {
+  animation:
+    walkBob .4s
+    infinite alternate;
+}
+
+@keyframes walkLegLeft {
+
+  from {
+    transform:
+      rotate(30deg);
+  }
+
+  to {
+    transform:
+      rotate(-28deg);
+  }
+
+}
+
+@keyframes walkLegRight {
+
+  from {
+    transform:
+      rotate(-30deg);
+  }
+
+  to {
+    transform:
+      rotate(28deg);
+  }
+
+}
+
+@keyframes walkArm {
+
+  from {
+    transform:
+      rotate(40deg);
+  }
+
+  to {
+    transform:
+      rotate(-28deg);
+  }
+
+}
+
+@keyframes walkBob {
+
+  to {
+    translate:
+      0 -3px;
+  }
+
+}
+
+
+/* =========================================================
+   UMBRELLA
+========================================================= */
+
+.umbrella {
+  position: absolute;
+
+  left: 12px;
+  top: -67px;
+
+  z-index: -1;
+
+  width: 145px;
+  height: 190px;
+}
+
+.umbrella-top {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 145px;
+  height: 73px;
+
+  overflow: hidden;
+}
+
+.umbrella-canopy {
+  position: absolute;
+
+  left: 0;
+  top: 14px;
+
+  width: 145px;
+  height: 125px;
+
+  border:
+    3px solid #1b2835;
+
+  border-radius:
+    50% 50% 0 0;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      #758fa9,
+      #425a72 65%,
+      #2b4054
+    );
+}
+
+.umbrella-canopy::before {
+  content: "";
+
+  position: absolute;
+
+  left: 48px;
+  top: -2px;
+
+  width: 46px;
+  height: 66px;
+
+  border-left:
+    1px solid
+    rgba(255,255,255,.15);
+
+  border-right:
+    1px solid
+    rgba(0,0,0,.18);
+
+  border-radius: 50%;
+}
+
+.umbrella-stick {
+  position: absolute;
+
+  left: 67px;
+  top: 62px;
+
+  width: 4px;
+  height: 108px;
+
+  border-radius: 5px;
+
+  background: #1b2026;
+}
+
+.umbrella-stick::after {
+  content: "";
+
+  position: absolute;
+
+  left: -12px;
+  bottom: -4px;
+
+  width: 16px;
+  height: 19px;
+
+  border:
+    4px solid #1b2026;
+
+  border-top: none;
+  border-right: none;
+
+  border-radius:
+    0 0 0 14px;
+}
+
+
+/* =========================================================
+   FALL
+========================================================= */
+
+.walker-rig.slipping {
+  animation:
+    slipFall 1.2s ease
+    forwards;
+}
+
+@keyframes slipFall {
+
+  0% {
+    transform:
+      rotate(0)
+      translateY(0);
+  }
+
+  20% {
+    transform:
+      rotate(-20deg)
+      translateY(-5px);
+  }
+
+  42% {
+    transform:
+      rotate(28deg)
+      translateY(8px);
+  }
+
+  68% {
+    transform:
+      rotate(63deg)
+      translateY(35px);
+  }
+
+  100% {
+    transform:
+      rotate(76deg)
+      translateY(54px);
+  }
+
+}
+
+
+/* =========================================================
+   GET UP
+========================================================= */
+
+.walker-rig.getting-up {
+  animation:
+    getUp 1.4s ease
+    forwards;
+}
+
+@keyframes getUp {
+
+  from {
+    transform:
+      rotate(76deg)
+      translateY(54px);
+  }
+
+  55% {
+    transform:
+      rotate(18deg)
+      translateY(12px);
+  }
+
+  to {
+    transform:
+      rotate(0)
+      translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   LIMP
+========================================================= */
+
+.walker-rig.injured
+.walk-leg.left {
+  transform:
+    rotate(34deg)
+    translateY(3px);
+}
+
+.walker-rig.injured.walking {
+  animation:
+    limpBody .72s
+    infinite;
+}
+
+.walker-rig.injured.walking
+.walk-leg.left {
+  animation:
+    injuredLeg .72s
+    infinite;
+}
+
+.walker-rig.injured.walking
+.walk-leg.right {
+  animation:
+    healthyLeg .72s
+    infinite;
+}
+
+.walker-rig.injured.walking
+.walk-arm.left {
+  animation:
+    limpArm .72s
+    infinite;
+}
+
+@keyframes limpBody {
+
+  0%,
+  100% {
+    transform:
+      rotate(0)
+      translateY(0);
+  }
+
+  35% {
+    transform:
+      rotate(-6deg)
+      translateY(5px);
+  }
+
+  65% {
+    transform:
+      rotate(3deg)
+      translateY(-2px);
+  }
+
+}
+
+@keyframes injuredLeg {
+
+  0%,
+  100% {
+    transform:
+      rotate(34deg)
+      translateY(3px);
+  }
+
+  45% {
+    transform:
+      rotate(28deg)
+      translateY(7px);
+  }
+
+  70% {
+    transform:
+      rotate(38deg)
+      translateY(4px);
+  }
+
+}
+
+@keyframes healthyLeg {
+
+  0% {
+    transform:
+      rotate(-25deg);
+  }
+
+  50% {
+    transform:
+      rotate(31deg);
+  }
+
+  100% {
+    transform:
+      rotate(-25deg);
+  }
+
+}
+
+@keyframes limpArm {
+
+  0%,
+  100% {
+    transform:
+      rotate(30deg);
+  }
+
+  50% {
+    transform:
+      rotate(-16deg);
+  }
+
+}
+
+
+/* =========================================================
+   FARM
+========================================================= */
+
+.farm {
+  position: absolute;
+
+  right: -3%;
+  bottom: 19vh;
+
+  z-index: 55;
+
+  width: 44vw;
+
+  min-width: 450px;
+
+  height: 31vh;
+
+  opacity: 0;
+
+  transform:
+    translateX(190px);
+
+  transition:
+    opacity 1.5s ease,
+    transform 1.7s ease;
+}
+
+.farm.visible {
+  opacity: 1;
+
+  transform:
+    translateX(0);
+}
+
+.farm-ground {
+  position: absolute;
+
+  inset:
+    44px 0 0 0;
+
+  border-radius:
+    43% 0 0 0;
+
+  background:
+    linear-gradient(
+      #375239,
+      #1c3022
+    );
+}
+
+
+/* =========================================================
+   FARM SIGN
+========================================================= */
+
+.farm-sign {
+  position: absolute;
+
+  left: 8%;
+  top: -12px;
+
+  z-index: 80;
+
+  opacity: 0;
+
+  transform:
+    rotate(-5deg)
+    translateY(22px);
+
+  transition: 1s ease;
+}
+
+.farm-sign.show {
+  opacity: 1;
+
+  transform:
+    rotate(-5deg)
+    translateY(0);
+}
+
+.sign {
+  min-width: 165px;
+
+  padding:
+    12px 22px;
+
+  border:
+    3px solid #39281d;
+
+  border-radius: 7px;
+
+  color: #f2e3ca;
+
+  text-align: center;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 18px;
+
+  background:
+    linear-gradient(
+      #795d40,
+      #4e3929
+    );
+}
+
+.sign-post {
+  width: 8px;
+  height: 74px;
+
+  margin: auto;
+
+  background: #493427;
+}
+
+
+/* =========================================================
+   FLOWER ROWS
+========================================================= */
+
+.flower-row {
+  position: absolute;
+
+  left: 7%;
+  right: 5%;
+
+  height: 72px;
+
+  opacity: 0;
+
+  transform:
+    translateY(18px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.flower-row.show {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+.row1 {
+  bottom: 120px;
+}
+
+.row2 {
+  bottom: 73px;
+}
+
+.row3 {
+  bottom: 27px;
+}
+
+
+/* =========================================================
+   ROSE
+========================================================= */
+
+.rose {
+  position: absolute;
+
+  width: 40px;
+  height: 78px;
+
+  transform-origin:
+    bottom center;
+
+  animation:
+    roseSway 2.1s
+    ease-in-out
+    infinite alternate;
+}
+
+@keyframes roseSway {
+
+  from {
+    rotate: -3deg;
+  }
+
+  to {
+    rotate: 4deg;
+  }
+
+}
+
+.rose-stem {
+  position: absolute;
+
+  left: 19px;
+  bottom: 0;
+
+  width: 3px;
+  height: 53px;
+
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      #59a260,
+      #2b6338
+    );
+}
+
+.rose-leaf {
+  position: absolute;
+
+  left: 19px;
+  bottom: 23px;
+
+  width: 21px;
+  height: 11px;
+
+  border-radius:
+    100% 0 100% 0;
+
+  background: #58a461;
+
+  transform:
+    rotate(-25deg);
+}
+
+.rose-head {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 39px;
+  height: 39px;
+}
+
+.petal {
+  position: absolute;
+
+  left: 7px;
+  top: 5px;
+
+  width: 26px;
+  height: 29px;
+
+  border-radius:
+    65% 35% 68% 32%;
+
+  transform-origin:
+    50% 72%;
+
+  background:
+    radial-gradient(
+      circle at 34% 18%,
+      #ff95a7,
+      #ec3b5d 43%,
+      #b11336 76%,
+      #861029
+    );
+}
+
+.petal:nth-child(1) {
+  transform: rotate(0deg);
+}
+
+.petal:nth-child(2) {
+  transform: rotate(60deg);
+}
+
+.petal:nth-child(3) {
+  transform: rotate(120deg);
+}
+
+.petal:nth-child(4) {
+  transform: rotate(180deg);
+}
+
+.petal:nth-child(5) {
+  transform: rotate(240deg);
+}
+
+.petal:nth-child(6) {
+  transform: rotate(300deg);
+}
+
+.rose-head::after {
+  content: "";
+
+  position: absolute;
+
+  left: 12px;
+  top: 13px;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #dd3152,
+      #851027
+    );
+}
+
+.special-rose {
+  left: 72%;
+  bottom: 9px;
+
+  z-index: 75;
+
+  transform:
+    scale(1.3);
+}
+
+.special-rose.picked {
+  opacity: 0;
+
+  transform:
+    translateY(-25px)
+    scale(.25);
+
+  transition:
+    .7s ease;
+}
+
+
+/* =========================================================
+   FENCE
+========================================================= */
+
+.fence {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 16px;
+
+  z-index: 60;
+
+  height: 112px;
+}
+
+.fence::before,
+.fence::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 8px;
+
+  border-radius: 8px;
+
+  background: #73593f;
+}
+
+.fence::before {
+  top: 35px;
+}
+
+.fence::after {
+  top: 77px;
+}
+
+.post {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 10px;
+  height: 112px;
+
+  border-radius: 4px;
+
+  background: #604832;
+}
+
+
+/* =========================================================
+   HELD ROSE
+========================================================= */
+
+.held-rose {
+  position: absolute;
+
+  left: -7px;
+  top: 58px;
+
+  z-index: 40;
+
+  width: 60px;
+  height: 128px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform:
+    rotate(45deg)
+    scale(.35);
+
+  transform-origin:
+    bottom center;
+
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+}
+
+.held-rose.show {
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+    rotate(45deg)
+    scale(1);
+}
+
+.held-stem {
+  position: absolute;
+
+  left: 29px;
+  bottom: 0;
+
+  width: 4px;
+  height: 94px;
+
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      #58a461,
+      #285d35
+    );
+}
+
+.held-leaf {
+  position: absolute;
+
+  left: 28px;
+  bottom: 34px;
+
+  width: 28px;
+  height: 13px;
+
+  border-radius:
+    100% 0 100% 0;
+
+  background: #58a563;
+
+  transform:
+    rotate(-25deg);
+}
+
+.held-head {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 57px;
+  height: 57px;
+}
+
+.held-petal {
+  position: absolute;
+
+  left: 10px;
+  top: 5px;
+
+  width: 38px;
+  height: 42px;
+
+  border-radius:
+    65% 35% 68% 32%;
+
+  transform-origin:
+    50% 72%;
+
+  background:
+    radial-gradient(
+      circle at 35% 18%,
+      #ffadbb,
+      #ef4668 43%,
+      #b21438 76%,
+      #8d102c
+    );
+}
+
+.held-petal:nth-child(1) {
+  transform: rotate(0deg);
+}
+
+.held-petal:nth-child(2) {
+  transform: rotate(60deg);
+}
+
+.held-petal:nth-child(3) {
+  transform: rotate(120deg);
+}
+
+.held-petal:nth-child(4) {
+  transform: rotate(180deg);
+}
+
+.held-petal:nth-child(5) {
+  transform: rotate(240deg);
+}
+
+.held-petal:nth-child(6) {
+  transform: rotate(300deg);
+}
+
+.held-head::after {
+  content: "";
+
+  position: absolute;
+
+  left: 19px;
+  top: 19px;
+
+  width: 19px;
+  height: 19px;
+
+  border-radius: 50%;
+
+  background: #a51131;
+}
+
+.walker-rig.has-rose
+.walk-arm.left {
+  animation: none !important;
+
+  transform:
+    rotate(47deg);
+}
+
+
+/* =========================================================
+   PICK ROSE
+========================================================= */
+
+.walker-rig.pick {
+  transform:
+    rotate(17deg)
+    translateY(12px);
+}
+
+
+/* =========================================================
+   OFFER ROSE
+========================================================= */
+
+.walker-rig.offer {
+  transform:
+    scale(1.2)
+    translateY(-8px);
+}
+
+.walker-rig.offer
+.held-rose {
+  animation:
+    offerRose 1.5s ease
+    forwards;
+}
+
+@keyframes offerRose {
+
+  from {
+    transform:
+      rotate(45deg)
+      scale(1);
+  }
+
+  to {
+    transform:
+      translate(-10px,-48px)
+      rotate(18deg)
+      scale(1.65);
+  }
+
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final {
+  position: absolute;
+  inset: 0;
+
+  z-index: 9900;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition:
+    opacity 1.7s ease;
+}
+
+.final.show {
+  opacity: 1;
+}
+
+.final-card {
+  width:
+    min(
+      660px,
+      calc(100% - 36px)
+    );
+
+  padding:
+    46px 36px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.2);
+
+  border-radius: 30px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.15),
+      rgba(255,255,255,.055)
+    );
+
+  backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    0 35px 100px
+    rgba(0,0,0,.32);
+
+  transform:
+    translateY(30px)
+    scale(.95);
+
+  transition:
+    transform 1.4s ease;
+}
+
+.final.show
+.final-card {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.final-small {
+  margin-bottom: 13px;
+
+  color:
+    rgba(255,255,255,.58);
+
+  text-transform: uppercase;
+
+  letter-spacing: 2px;
+
+  font-size: 13px;
+}
+
+.final h1 {
+  margin-bottom: 17px;
+
+  color: white;
+
+  font-size:
+    clamp(35px, 5vw, 62px);
+
+  font-weight: 450;
+
+  line-height: 1.13;
+
+  letter-spacing: -1.6px;
+}
+
+.final h1 span {
+  color: #ffc3ce;
+}
+
+.final p {
+  max-width: 550px;
+
+  margin: auto;
+
+  color:
+    rgba(255,255,255,.74);
+
+  font-size:
+    clamp(15px, 1.5vw, 18px);
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width: 900px) {
+
+  .window {
+    left: 3%;
+
+    width: 46vw;
+    height: 34vh;
+  }
+
+  .workstation {
+    right: -90px;
+
+    transform:
+      scale(.78);
+
+    transform-origin:
+      bottom right;
+  }
+
+  .thought {
+    right: 4%;
+
+    width: 43vw;
+  }
+
+  .thought.window-position {
+    left: 16%;
+
+    right: auto;
+  }
+
+  .idea-bulb {
+    right: 8%;
+  }
+
+  .room-walker {
+    transform:
+      scale(.85);
+
+    transform-origin:
+      bottom center;
+  }
+
+  .room-walker.to-window,
+  .room-walker.at-window {
+    left: 22%;
+  }
+
+  .farm {
+    right: -120px;
+
+    width: 62vw;
+
+    min-width: 390px;
+  }
+
+  .walker {
+    transform:
+      scale(.84);
+
+    transform-origin:
+      bottom center;
+  }
+
+}
+
+
+@media(max-width: 550px) {
+
+  .caption {
+    top: 4.5%;
+  }
+
+  .window {
+    width: 55vw;
+    height: 29vh;
+  }
+
+  .workstation {
+    right: -190px;
+    bottom: -1%;
+
+    transform:
+      scale(.62);
+  }
+
+  .thought {
+    top: 9%;
+
+    width: 54vw;
+  }
+
+  .thought.window-position {
+    left: 14%;
+
+    width: 57vw;
+  }
+
+  .room-walker {
+    bottom: 14%;
+
+    transform:
+      scale(.76);
+
+    transform-origin:
+      bottom center;
+  }
+
+  .room-walker.to-window,
+  .room-walker.at-window {
+    left: 16%;
+  }
+
+  .farm {
+    right: -190px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =======================================================
+     START
+======================================================= -->
+
+<div
+  class="start-screen"
+  id="startScreen"
+>
+
+  <h1>
+    A little something
+  </h1>
+
+  <button
+    class="open-btn"
+    id="openBtn"
+  >
+    Open
+  </button>
+
+</div>
+
+
+<main class="world">
+
+  <div
+    class="caption"
+    id="caption"
+  ></div>
+
+  <div
+    class="flash"
+    id="flash"
+  ></div>
+
+
+  <!-- =====================================================
+       ROOM
+  ====================================================== -->
+
+  <section
+    class="room"
+    id="room"
+  >
+
+    <!-- WINDOW -->
+
+    <div class="window">
+
+      <div class="window-sky"></div>
+
+      <canvas
+        id="windowRain"
+      ></canvas>
+
+      <div class="window-hill"></div>
+
+      <div class="window-v"></div>
+
+      <div class="window-h"></div>
+
+    </div>
+
+
+    <!-- ===================================================
+         WORKSTATION
+    ==================================================== -->
+
+    <div class="workstation">
+
+      <!-- CHAIR -->
+
+      <div class="chair">
+
+        <div class="chair-back"></div>
+
+        <div class="chair-seat"></div>
+
+        <div class="chair-post"></div>
+
+        <div class="chair-base"></div>
+
+      </div>
+
+
+      <!-- =================================================
+           SEATED GUY
+      ================================================== -->
+
+      <div
+        class="seated-guy typing"
+        id="seatedGuy"
+      >
+
+        <div class="seated-head"></div>
+
+        <div class="seated-hair"></div>
+
+
+        <div class="seated-glasses">
+
+          <div class="glass left"></div>
+
+          <div class="glass right"></div>
+
+          <div class="bridge"></div>
+
+        </div>
+
+
+        <div class="seated-body"></div>
+
+
+        <div class="seated-arm left"></div>
+
+        <div class="seated-arm right"></div>
+
+
+        <!--
+          Kept for compatibility,
+          but hidden using CSS.
+        -->
+
+        <div class="seated-thigh left"></div>
+
+        <div class="seated-thigh right"></div>
+
+
+        <!-- clean legs -->
+
+        <div class="seated-shin left"></div>
+
+        <div class="seated-shin right"></div>
+
+
+        <div class="seated-shoe left"></div>
+
+        <div class="seated-shoe right"></div>
+
+      </div>
+
+
+      <!-- LAPTOP -->
+
+      <div class="laptop-wrap">
+
+        <div class="laptop">
+
+          <div class="laptop-screen">
+
+            <div class="code one"></div>
+
+            <div class="code two"></div>
+
+            <div class="code three"></div>
+
+            <div class="code four"></div>
+
+            <div class="code five"></div>
+
+            <div class="code six"></div>
+
+            <div class="cursor"></div>
+
+          </div>
+
+          <div class="laptop-base"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PHONE -->
+
+      <div
+        class="phone"
+        id="phone"
+      ></div>
+
+
+      <!-- NOTIFICATION -->
+
+      <div
+        class="notification"
+        id="notification"
+      >
+
+        <strong>
+          Bidisha
+        </strong>
+
+        <span>
+          sent you a message
+        </span>
+
+      </div>
+
+
+      <!-- DESK -->
+
+      <div class="desk-top"></div>
+
+      <div class="desk-leg left"></div>
+
+      <div class="desk-leg right"></div>
+
+    </div>
+
+
+    <!-- LIGHT BULB -->
+
+    <div
+      class="idea-bulb"
+      id="ideaBulb"
+    >
+
+      <div class="bulb-circle"></div>
+
+    </div>
+
+
+    <!-- THOUGHT -->
+
+    <div
+      class="thought"
+      id="thought"
+    ></div>
+
+
+    <!-- ===================================================
+         ROOM WALKER
+    ==================================================== -->
+
+    <div
+      class="room-walker"
+      id="roomWalker"
+    >
+
+      <div class="room-head"></div>
+
+      <div class="room-hair"></div>
+
+
+      <div class="room-glasses">
+
+        <div class="glass left"></div>
+
+        <div class="glass right"></div>
+
+        <div class="bridge"></div>
+
+      </div>
+
+
+      <div class="room-body"></div>
+
+
+      <div class="room-arm left"></div>
+
+      <div class="room-arm right"></div>
+
+
+      <div class="room-leg left"></div>
+
+      <div class="room-leg right"></div>
+
+
+      <div class="room-shoe left"></div>
+
+      <div class="room-shoe right"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       OUTSIDE
+  ====================================================== -->
+
+  <section
+    class="outside"
+    id="outside"
+  >
+
+    <canvas
+      id="outsideRain"
+    ></canvas>
+
+
+    <div class="cloud one"></div>
+
+    <div class="cloud two"></div>
+
+    <div class="cloud three"></div>
+
+
+    <div class="far-hill"></div>
+
+    <div class="near-hill"></div>
+
+    <div class="ground"></div>
+
+    <div class="road"></div>
+
+
+    <!-- PUDDLE -->
+
+    <div class="puddle"></div>
+
+
+    <!-- SPLASH -->
+
+    <div
+      class="splash"
+      id="splash"
+    >
+
+      <div class="drop"></div>
+
+      <div class="drop"></div>
+
+      <div class="drop"></div>
+
+      <div class="drop"></div>
+
+    </div>
+
+
+    <!-- CRACK -->
+
+    <div
+      class="crack"
+      id="crack"
+    >
+      CRACK!
+    </div>
+
+
+    <!-- ===================================================
+         FARM
+    ==================================================== -->
+
+    <div
+      class="farm"
+      id="farm"
+    >
+
+      <div class="farm-ground"></div>
+
+
+      <div
+        class="farm-sign"
+        id="farmSign"
+      >
+
+        <div class="sign">
+          Rose Farm
+        </div>
+
+        <div class="sign-post"></div>
+
+      </div>
+
+
+      <div
+        class="flower-row row1"
+        id="row1"
+      ></div>
+
+
+      <div
+        class="flower-row row2"
+        id="row2"
+      ></div>
+
+
+      <div
+        class="flower-row row3"
+        id="row3"
+      ></div>
+
+
+      <!-- SPECIAL ROSE -->
+
+      <div
+        class="rose special-rose"
+        id="specialRose"
+      >
+
+        <div class="rose-head">
+
+          <div class="petal"></div>
+
+          <div class="petal"></div>
+
+          <div class="petal"></div>
+
+          <div class="petal"></div>
+
+          <div class="petal"></div>
+
+          <div class="petal"></div>
+
+        </div>
+
+
+        <div class="rose-stem"></div>
+
+        <div class="rose-leaf"></div>
+
+      </div>
+
+
+      <!-- FENCE -->
+
+      <div class="fence">
+
+        <div
+          class="post"
+          style="left:4%"
+        ></div>
+
+        <div
+          class="post"
+          style="left:25%"
+        ></div>
+
+        <div
+          class="post"
+          style="left:46%"
+        ></div>
+
+        <div
+          class="post"
+          style="left:67%"
+        ></div>
+
+        <div
+          class="post"
+          style="left:88%"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         OUTDOOR CHARACTER
+    ==================================================== -->
+
+    <div
+      class="walker"
+      id="walker"
+    >
+
+      <div
+        class="walker-rig"
+        id="walkerRig"
+      >
+
+        <!-- UMBRELLA -->
+
+        <div class="umbrella">
+
+          <div class="umbrella-top">
+
+            <div class="umbrella-canopy"></div>
+
+          </div>
+
+          <div class="umbrella-stick"></div>
+
+        </div>
+
+
+        <!-- HEAD -->
+
+        <div class="walker-head"></div>
+
+        <div class="walker-hair"></div>
+
+
+        <div class="walker-glasses">
+
+          <div class="glass left"></div>
+
+          <div class="glass right"></div>
+
+          <div class="bridge"></div>
+
+        </div>
+
+
+        <!-- BODY -->
+
+        <div class="walker-body"></div>
+
+
+        <!-- ARMS -->
+
+        <div class="walk-arm left"></div>
+
+        <div class="walk-arm right"></div>
+
+        <div class="umbrella-hand"></div>
+
+
+        <!--
+          LEFT LEG
+          BANDAGE IS INSIDE LEG.
+        -->
+
+        <div class="walk-leg left">
+
+          <div class="bandage"></div>
+
+        </div>
+
+
+        <!-- RIGHT LEG -->
+
+        <div class="walk-leg right"></div>
+
+
+        <!-- HELD ROSE -->
+
+        <div
+          class="held-rose"
+          id="heldRose"
+        >
+
+          <div class="held-head">
+
+            <div class="held-petal"></div>
+
+            <div class="held-petal"></div>
+
+            <div class="held-petal"></div>
+
+            <div class="held-petal"></div>
+
+            <div class="held-petal"></div>
+
+            <div class="held-petal"></div>
+
+          </div>
+
+
+          <div class="held-stem"></div>
+
+          <div class="held-leaf"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FINAL
+  ====================================================== -->
+
+  <section
+    class="final"
+    id="final"
+  >
+
+    <div class="final-card">
+
+      <div class="final-small">
+        mission accomplished
+      </div>
+
+
+      <h1>
+        This one's for you,
+        <span>Bidisha.</span>
+      </h1>
+
+
+      <p>
+        Apparently a rainy night,
+        one dangerous puddle and one very unhappy leg
+        weren't enough to stop him.
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const GIRL_NAME =
+  "Bidisha";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const startScreen =
+  document.getElementById(
+    "startScreen"
+  );
+
+const openBtn =
+  document.getElementById(
+    "openBtn"
+  );
+
+const caption =
+  document.getElementById(
+    "caption"
+  );
+
+const flash =
+  document.getElementById(
+    "flash"
+  );
+
+const room =
+  document.getElementById(
+    "room"
+  );
+
+const seatedGuy =
+  document.getElementById(
+    "seatedGuy"
+  );
+
+const phone =
+  document.getElementById(
+    "phone"
+  );
+
+const notification =
+  document.getElementById(
+    "notification"
+  );
+
+const ideaBulb =
+  document.getElementById(
+    "ideaBulb"
+  );
+
+const thought =
+  document.getElementById(
+    "thought"
+  );
+
+const roomWalker =
+  document.getElementById(
+    "roomWalker"
+  );
+
+const outside =
+  document.getElementById(
+    "outside"
+  );
+
+const walker =
+  document.getElementById(
+    "walker"
+  );
+
+const walkerRig =
+  document.getElementById(
+    "walkerRig"
+  );
+
+const splash =
+  document.getElementById(
+    "splash"
+  );
+
+const crack =
+  document.getElementById(
+    "crack"
+  );
+
+const farm =
+  document.getElementById(
+    "farm"
+  );
+
+const farmSign =
+  document.getElementById(
+    "farmSign"
+  );
+
+const specialRose =
+  document.getElementById(
+    "specialRose"
+  );
+
+const heldRose =
+  document.getElementById(
+    "heldRose"
+  );
+
+const final =
+  document.getElementById(
+    "final"
+  );
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function wait(ms) {
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
+
+
+async function say(
+  text,
+  duration = 1600
+) {
+
+  caption.textContent =
+    text;
+
+
+  caption.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    duration
+  );
+
+
+  caption.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    380
+  );
+
+}
+
+
+/* =========================================================
+   VISUAL RAIN
+========================================================= */
+
+function createRain(
+  id,
+  density = 1
+) {
+
+  const canvas =
+    document.getElementById(
+      id
+    );
+
+
+  const context =
+    canvas.getContext(
+      "2d"
+    );
+
+
+  let active =
+    true;
+
+
+  let drops =
+    [];
+
+
+  function resize() {
+
+    const rect =
+      canvas.parentElement
+        .getBoundingClientRect();
+
+
+    canvas.width =
+      rect.width;
+
+
+    canvas.height =
+      rect.height;
+
+
+    createDrops();
+
+  }
+
+
+  function createDrops() {
+
+    drops = [];
+
+
+    const count =
+      Math.max(
+        60,
+        Math.floor(
+          canvas.width /
+          5 *
+          density
+        )
+      );
+
+
+    for (
+      let i = 0;
+      i < count;
+      i++
+    ) {
+
+      drops.push({
+
+        x:
+          Math.random() *
+          canvas.width,
+
+        y:
+          Math.random() *
+          canvas.height,
+
+        length:
+          10 +
+          Math.random() *
+          18,
+
+        speed:
+          9 +
+          Math.random() *
+          10,
+
+        opacity:
+          .1 +
+          Math.random() *
+          .35
+
+      });
+
+    }
+
+  }
+
+
+  function animate() {
+
+    context.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+
+    if (active) {
+
+      drops.forEach(
+        drop => {
+
+          context.beginPath();
+
+
+          context.moveTo(
+            drop.x,
+            drop.y
+          );
+
+
+          context.lineTo(
+            drop.x - 6,
+            drop.y +
+            drop.length
+          );
+
+
+          context.strokeStyle =
+            `rgba(
+              195,
+              223,
+              255,
+              ${drop.opacity}
+            )`;
+
+
+          context.lineWidth =
+            1;
+
+
+          context.stroke();
+
+
+          drop.x -=
+            1.3;
+
+
+          drop.y +=
+            drop.speed;
+
+
+          if (
+            drop.y >
+            canvas.height +
+            30
+          ) {
+
+            drop.y =
+              -30;
+
+
+            drop.x =
+              Math.random() *
+              canvas.width;
+
+          }
+
+        }
+      );
+
+    }
+
+
+    requestAnimationFrame(
+      animate
+    );
+
+  }
+
+
+  resize();
+
+  animate();
+
+
+  window.addEventListener(
+    "resize",
+    resize
+  );
+
+
+  return {
+
+    stop() {
+      active = false;
+    },
+
+    start() {
+      active = true;
+    }
+
+  };
+
+}
+
+
+createRain(
+  "windowRain",
+  .8
+);
+
+
+const outdoorRain =
+  createRain(
+    "outsideRain",
+    1.15
+  );
+
+
+/* =========================================================
+   CREATE ROSES
+========================================================= */
+
+function createRose() {
+
+  const rose =
+    document.createElement(
+      "div"
+    );
+
+
+  rose.className =
+    "rose";
+
+
+  rose.innerHTML = `
+
+    <div class="rose-head">
+
+      <div class="petal"></div>
+
+      <div class="petal"></div>
+
+      <div class="petal"></div>
+
+      <div class="petal"></div>
+
+      <div class="petal"></div>
+
+      <div class="petal"></div>
+
+    </div>
+
+    <div class="rose-stem"></div>
+
+    <div class="rose-leaf"></div>
+
+  `;
+
+
+  return rose;
+
+}
+
+
+function fillFlowerRow(
+  id,
+  amount
+) {
+
+  const row =
+    document.getElementById(
+      id
+    );
+
+
+  for (
+    let i = 0;
+    i < amount;
+    i++
+  ) {
+
+    const rose =
+      createRose();
+
+
+    rose.style.left =
+      (
+        (
+          i /
+          amount
+        ) *
+        94 +
+        Math.random() *
+        3
+      ) +
+      "%";
+
+
+    rose.style.bottom =
+      (
+        Math.random() *
+        7
+      ) +
+      "px";
+
+
+    rose.style.scale =
+      .72 +
+      Math.random() *
+      .4;
+
+
+    rose.style.animationDelay =
+      (
+        Math.random() *
+        2
+      ) +
+      "s";
+
+
+    row.appendChild(
+      rose
+    );
+
+  }
+
+}
+
+
+fillFlowerRow(
+  "row1",
+  14
+);
+
+fillFlowerRow(
+  "row2",
+  16
+);
+
+fillFlowerRow(
+  "row3",
+  18
+);
+
+
+/* =========================================================
+   AUDIO GLOBALS
+========================================================= */
+
+let audioContext =
+  null;
+
+let typingTimer =
+  null;
+
+let walkingTimer =
+  null;
+
+let rainSource =
+  null;
+
+let rainGain =
+  null;
+
+let stormTimer =
+  null;
+
+let stormActive =
+  false;
+
+
+/* =========================================================
+   AUDIO INIT
+========================================================= */
+
+function initAudio() {
+
+  audioContext =
+    new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+function keyboardSound() {
+
+  if (!audioContext)
+    return;
+
+
+  const oscillator =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  oscillator.type =
+    "square";
+
+
+  oscillator.frequency.value =
+    120 +
+    Math.random() *
+    80;
+
+
+  gain.gain.setValueAtTime(
+    .012,
+    audioContext.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime +
+    .025
+  );
+
+
+  oscillator.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  oscillator.start();
+
+
+  oscillator.stop(
+    audioContext.currentTime +
+    .03
+  );
+
+}
+
+
+function startTyping() {
+
+  if (typingTimer)
+    return;
+
+
+  typingTimer =
+    setInterval(
+      keyboardSound,
+      120
+    );
+
+}
+
+
+function stopTyping() {
+
+  clearInterval(
+    typingTimer
+  );
+
+
+  typingTimer =
+    null;
+
+}
+
+
+/* =========================================================
+   MESSAGE SOUND
+========================================================= */
+
+function messageSound() {
+
+  if (!audioContext)
+    return;
+
+
+  [
+    740,
+    990
+  ].forEach(
+    (
+      frequency,
+      index
+    ) => {
+
+      const oscillator =
+        audioContext
+          .createOscillator();
+
+
+      const gain =
+        audioContext
+          .createGain();
+
+
+      const start =
+        audioContext.currentTime +
+        index *
+        .09;
+
+
+      oscillator.type =
+        "sine";
+
+
+      oscillator.frequency.value =
+        frequency;
+
+
+      gain.gain.setValueAtTime(
+        .001,
+        start
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        .07,
+        start +
+        .02
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        start +
+        .22
+      );
+
+
+      oscillator.connect(
+        gain
+      );
+
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start(
+        start
+      );
+
+
+      oscillator.stop(
+        start +
+        .25
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   THUNDER
+========================================================= */
+
+function thunderSound() {
+
+  if (!audioContext)
+    return;
+
+
+  const duration =
+    2;
+
+
+  const buffer =
+    audioContext.createBuffer(
+      1,
+      audioContext.sampleRate *
+      duration,
+      audioContext.sampleRate
+    );
+
+
+  const data =
+    buffer.getChannelData(
+      0
+    );
+
+
+  for (
+    let i = 0;
+    i < data.length;
+    i++
+  ) {
+
+    const progress =
+      i /
+      data.length;
+
+
+    data[i] =
+      (
+        Math.random() *
+        2 -
+        1
+      ) *
+      Math.pow(
+        1 -
+        progress,
+        2.3
+      );
+
+  }
+
+
+  const source =
+    audioContext
+      .createBufferSource();
+
+
+  const filter =
+    audioContext
+      .createBiquadFilter();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  source.buffer =
+    buffer;
+
+
+  filter.type =
+    "lowpass";
+
+
+  filter.frequency.value =
+    175;
+
+
+  gain.gain.setValueAtTime(
+    .58,
+    audioContext.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime +
+    duration
+  );
+
+
+  source.connect(
+    filter
+  );
+
+
+  filter.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  source.start();
+
+}
+
+
+function lightning() {
+
+  flash.classList.remove(
+    "active"
+  );
+
+
+  void flash.offsetWidth;
+
+
+  flash.classList.add(
+    "active"
+  );
+
+
+  thunderSound();
+
+}
+
+
+/* =========================================================
+   RAIN AUDIO
+========================================================= */
+
+function startRainAmbience() {
+
+  if (
+    !audioContext ||
+    rainSource
+  ) {
+    return;
+  }
+
+
+  const buffer =
+    audioContext.createBuffer(
+      1,
+      audioContext.sampleRate *
+      2,
+      audioContext.sampleRate
+    );
+
+
+  const data =
+    buffer.getChannelData(
+      0
+    );
+
+
+  for (
+    let i = 0;
+    i < data.length;
+    i++
+  ) {
+
+    data[i] =
+      (
+        Math.random() *
+        2 -
+        1
+      ) *
+      .33;
+
+  }
+
+
+  rainSource =
+    audioContext
+      .createBufferSource();
+
+
+  const highPass =
+    audioContext
+      .createBiquadFilter();
+
+
+  const lowPass =
+    audioContext
+      .createBiquadFilter();
+
+
+  rainGain =
+    audioContext
+      .createGain();
+
+
+  rainSource.buffer =
+    buffer;
+
+
+  rainSource.loop =
+    true;
+
+
+  highPass.type =
+    "highpass";
+
+
+  highPass.frequency.value =
+    350;
+
+
+  lowPass.type =
+    "lowpass";
+
+
+  lowPass.frequency.value =
+    2600;
+
+
+  rainGain.gain.setValueAtTime(
+    .001,
+    audioContext.currentTime
+  );
+
+
+  rainGain.gain.linearRampToValueAtTime(
+    .065,
+    audioContext.currentTime +
+    .8
+  );
+
+
+  rainSource.connect(
+    highPass
+  );
+
+
+  highPass.connect(
+    lowPass
+  );
+
+
+  lowPass.connect(
+    rainGain
+  );
+
+
+  rainGain.connect(
+    audioContext.destination
+  );
+
+
+  rainSource.start();
+
+}
+
+
+function stopRainAmbience() {
+
+  if (
+    !rainSource ||
+    !rainGain ||
+    !audioContext
+  ) {
+    return;
+  }
+
+
+  const oldSource =
+    rainSource;
+
+
+  const oldGain =
+    rainGain;
+
+
+  const now =
+    audioContext.currentTime;
+
+
+  oldGain.gain.cancelScheduledValues(
+    now
+  );
+
+
+  oldGain.gain.setValueAtTime(
+    Math.max(
+      oldGain.gain.value,
+      .01
+    ),
+    now
+  );
+
+
+  oldGain.gain.exponentialRampToValueAtTime(
+    .001,
+    now +
+    1
+  );
+
+
+  setTimeout(
+    () => {
+
+      try {
+        oldSource.stop();
+      }
+      catch {}
+
+    },
+    1100
+  );
+
+
+  rainSource =
+    null;
+
+
+  rainGain =
+    null;
+
+}
+
+
+/* =========================================================
+   RANDOM STORM
+========================================================= */
+
+function scheduleThunder() {
+
+  if (!stormActive)
+    return;
+
+
+  const delay =
+    4000 +
+    Math.random() *
+    5000;
+
+
+  stormTimer =
+    setTimeout(
+      () => {
+
+        if (!stormActive)
+          return;
+
+
+        lightning();
+
+
+        scheduleThunder();
+
+      },
+      delay
+    );
+
+}
+
+
+function startStorm() {
+
+  if (stormActive)
+    return;
+
+
+  stormActive =
+    true;
+
+
+  startRainAmbience();
+
+
+  scheduleThunder();
+
+}
+
+
+function stopStorm() {
+
+  stormActive =
+    false;
+
+
+  if (stormTimer) {
+
+    clearTimeout(
+      stormTimer
+    );
+
+
+    stormTimer =
+      null;
+
+  }
+
+
+  stopRainAmbience();
+
+}
+
+
+/* =========================================================
+   IDEA CHIME
+========================================================= */
+
+function chime() {
+
+  if (!audioContext)
+    return;
+
+
+  [
+    392,
+    523,
+    659
+  ].forEach(
+    (
+      frequency,
+      index
+    ) => {
+
+      const oscillator =
+        audioContext
+          .createOscillator();
+
+
+      const gain =
+        audioContext
+          .createGain();
+
+
+      const start =
+        audioContext.currentTime +
+        index *
+        .1;
+
+
+      oscillator.type =
+        "sine";
+
+
+      oscillator.frequency.value =
+        frequency;
+
+
+      gain.gain.setValueAtTime(
+        .001,
+        start
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        .075,
+        start +
+        .03
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        start +
+        .45
+      );
+
+
+      oscillator.connect(
+        gain
+      );
+
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start(
+        start
+      );
+
+
+      oscillator.stop(
+        start +
+        .5
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   FOOTSTEPS
+========================================================= */
+
+function footstep() {
+
+  if (!audioContext)
+    return;
+
+
+  const oscillator =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  oscillator.type =
+    "triangle";
+
+
+  oscillator.frequency.setValueAtTime(
+    90,
+    audioContext.currentTime
+  );
+
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    42,
+    audioContext.currentTime +
+    .08
+  );
+
+
+  gain.gain.setValueAtTime(
+    .07,
+    audioContext.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime +
+    .1
+  );
+
+
+  oscillator.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  oscillator.start();
+
+
+  oscillator.stop(
+    audioContext.currentTime +
+    .11
+  );
+
+}
+
+
+function startFootsteps(
+  injured = false
+) {
+
+  if (walkingTimer)
+    return;
+
+
+  footstep();
+
+
+  walkingTimer =
+    setInterval(
+      footstep,
+      injured
+        ? 720
+        : 400
+    );
+
+}
+
+
+function stopFootsteps() {
+
+  clearInterval(
+    walkingTimer
+  );
+
+
+  walkingTimer =
+    null;
+
+}
+
+
+/* =========================================================
+   SPLASH SOUND
+========================================================= */
+
+function splashSound() {
+
+  if (!audioContext)
+    return;
+
+
+  const duration =
+    .3;
+
+
+  const buffer =
+    audioContext.createBuffer(
+      1,
+      audioContext.sampleRate *
+      duration,
+      audioContext.sampleRate
+    );
+
+
+  const data =
+    buffer.getChannelData(
+      0
+    );
+
+
+  for (
+    let i = 0;
+    i < data.length;
+    i++
+  ) {
+
+    const fade =
+      1 -
+      i /
+      data.length;
+
+
+    data[i] =
+      (
+        Math.random() *
+        2 -
+        1
+      ) *
+      fade *
+      .18;
+
+  }
+
+
+  const source =
+    audioContext
+      .createBufferSource();
+
+
+  const filter =
+    audioContext
+      .createBiquadFilter();
+
+
+  filter.type =
+    "lowpass";
+
+
+  filter.frequency.value =
+    1000;
+
+
+  source.buffer =
+    buffer;
+
+
+  source.connect(
+    filter
+  );
+
+
+  filter.connect(
+    audioContext.destination
+  );
+
+
+  source.start();
+
+}
+
+
+/* =========================================================
+   CRACK SOUND
+========================================================= */
+
+function crackSound() {
+
+  if (!audioContext)
+    return;
+
+
+  const oscillator =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  oscillator.type =
+    "square";
+
+
+  oscillator.frequency.setValueAtTime(
+    140,
+    audioContext.currentTime
+  );
+
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    50,
+    audioContext.currentTime +
+    .16
+  );
+
+
+  gain.gain.setValueAtTime(
+    .1,
+    audioContext.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime +
+    .2
+  );
+
+
+  oscillator.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  oscillator.start();
+
+
+  oscillator.stop(
+    audioContext.currentTime +
+    .22
+  );
+
+}
+
+
+/* =========================================================
+   PLUCK SOUND
+========================================================= */
+
+function pluckSound() {
+
+  if (!audioContext)
+    return;
+
+
+  const oscillator =
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+    audioContext
+      .createGain();
+
+
+  oscillator.type =
+    "sine";
+
+
+  oscillator.frequency.setValueAtTime(
+    350,
+    audioContext.currentTime
+  );
+
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    680,
+    audioContext.currentTime +
+    .24
+  );
+
+
+  gain.gain.setValueAtTime(
+    .12,
+    audioContext.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioContext.currentTime +
+    .45
+  );
+
+
+  oscillator.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  oscillator.start();
+
+
+  oscillator.stop(
+    audioContext.currentTime +
+    .5
+  );
+
+}
+
+
+/* =========================================================
+   OUTDOOR WALK
+========================================================= */
+
+async function walkTo(
+  targetClass,
+  duration,
+  injured = false
+) {
+
+  walkerRig.classList.add(
+    "walking"
+  );
+
+
+  startFootsteps(
+    injured
+  );
+
+
+  walker.classList.add(
+    targetClass
+  );
+
+
+  await wait(
+    duration
+  );
+
+
+  walkerRig.classList.remove(
+    "walking"
+  );
+
+
+  stopFootsteps();
+
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+async function story() {
+
+  /* =======================================================
+     OPEN
+  ======================================================= */
+
+  startScreen.classList.add(
+    "hide"
+  );
+
+
+  startTyping();
+
+
+  /*
+    Just show him coding.
+    No clue what surprise is coming.
+  */
+
+  await wait(
+    2800
+  );
+
+
+  /* =======================================================
+     MESSAGE
+  ======================================================= */
+
+  messageSound();
+
+
+  phone.classList.add(
+    "vibrate"
+  );
+
+
+  await wait(
+    700
+  );
+
+
+  phone.classList.remove(
+    "vibrate"
+  );
+
+
+  seatedGuy.classList.remove(
+    "typing"
+  );
+
+
+  stopTyping();
+
+
+  await wait(
+    300
+  );
+
+
+  phone.classList.add(
+    "in-hand"
+  );
+
+
+  seatedGuy.classList.add(
+    "check-phone"
+  );
+
+
+  await wait(
+    650
+  );
+
+
+  notification.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    2100
+  );
+
+
+  notification.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    400
+  );
+
+
+  /* =======================================================
+     THINK
+  ======================================================= */
+
+  thought.textContent =
+    "Hmm...";
+
+
+  thought.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    1300
+  );
+
+
+  thought.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    350
+  );
+
+
+  /* =======================================================
+     IDEA
+  ======================================================= */
+
+  ideaBulb.classList.add(
+    "show"
+  );
+
+
+  chime();
+
+
+  await wait(
+    1700
+  );
+
+
+  ideaBulb.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    350
+  );
+
+
+  /* =======================================================
+     REMOVE PHONE FOREVER
+  ======================================================= */
+
+  phone.classList.remove(
+    "in-hand",
+    "vibrate"
+  );
+
+
+  phone.classList.add(
+    "gone"
+  );
+
+
+  seatedGuy.classList.remove(
+    "check-phone"
+  );
+
+
+  /* =======================================================
+     SWITCH CHARACTER RIG
+  ======================================================= */
+
+  seatedGuy.classList.add(
+    "hide"
+  );
+
+
+  await wait(
+    300
+  );
+
+
+  roomWalker.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    350
+  );
+
+
+  /* =======================================================
+     WALK TO WINDOW
+  ======================================================= */
+
+  roomWalker.classList.add(
+    "walking"
+  );
+
+
+  roomWalker.classList.add(
+    "to-window"
+  );
+
+
+  startFootsteps(
+    false
+  );
+
+
+  await wait(
+    1850
+  );
+
+
+  stopFootsteps();
+
+
+  roomWalker.classList.remove(
+    "walking"
+  );
+
+
+  roomWalker.classList.remove(
+    "to-window"
+  );
+
+
+  roomWalker.classList.add(
+    "at-window"
+  );
+
+
+  thought.classList.add(
+    "window-position"
+  );
+
+
+  await wait(
+    350
+  );
+
+
+  lightning();
+
+
+  await wait(
+    700
+  );
+
+
+  /* =======================================================
+     RAIN
+  ======================================================= */
+
+  thought.textContent =
+    "Oh... it's raining.";
+
+
+  thought.classList.add(
+    "sad"
+  );
+
+
+  thought.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    1900
+  );
+
+
+  thought.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    400
+  );
+
+
+  thought.textContent =
+    "No problem.";
+
+
+  thought.classList.remove(
+    "sad"
+  );
+
+
+  thought.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    1400
+  );
+
+
+  thought.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    350
+  );
+
+
+  /* =======================================================
+     OUTSIDE
+  ======================================================= */
+
+  room.classList.add(
+    "hide"
+  );
+
+
+  outside.classList.add(
+    "show"
+  );
+
+
+  startStorm();
+
+
+  await wait(
+    1200
+  );
+
+
+  lightning();
+
+
+  await wait(
+    500
+  );
+
+
+  await say(
+    "Okay... we're really doing this.",
+    1500
+  );
+
+
+  /* =======================================================
+     WALK
+  ======================================================= */
+
+  await walkTo(
+    "to-puddle",
+    4200
+  );
+
+
+  await wait(
+    250
+  );
+
+
+  /* =======================================================
+     FALL
+  ======================================================= */
+
+  splash.classList.add(
+    "active"
+  );
+
+
+  splashSound();
+
+
+  walkerRig.classList.add(
+    "slipping"
+  );
+
+
+  await wait(
+    720
+  );
+
+
+  crack.classList.add(
+    "show"
+  );
+
+
+  crackSound();
+
+
+  await wait(
+    650
+  );
+
+
+  splash.classList.remove(
+    "active"
+  );
+
+
+  crack.classList.remove(
+    "show"
+  );
+
+
+  await wait(
+    450
+  );
+
+
+  await say(
+    "...that looked painful.",
+    1400
+  );
+
+
+  /* =======================================================
+     GET UP
+  ======================================================= */
+
+  walkerRig.classList.remove(
+    "slipping"
+  );
+
+
+  walkerRig.classList.add(
+    "getting-up"
+  );
+
+
+  await wait(
+    1400
+  );
+
+
+  walkerRig.classList.remove(
+    "getting-up"
+  );
+
+
+  walkerRig.classList.add(
+    "injured"
+  );
+
+
+  await wait(
+    450
+  );
+
+
+  await say(
+    "Probably a good time to go home.",
+    1700
+  );
+
+
+  await wait(
+    250
+  );
+
+
+  await say(
+    "Nope.",
+    700
+  );
+
+
+  await say(
+    "Still going.",
+    1100
+  );
+
+
+  /* =======================================================
+     LIMP
+  ======================================================= */
+
+  await walkTo(
+    "after-puddle",
+    3200,
+    true
+  );
+
+
+  await walkTo(
+    "to-farm",
+    3400,
+    true
+  );
+
+
+  /* =======================================================
+     FARM REVEAL
+  ======================================================= */
+
+  farm.classList.add(
+    "visible"
+  );
+
+
+  await wait(
+    850
+  );
+
+
+  farmSign.classList.add(
+    "show"
+  );
+
+
+  await wait(
+    850
+  );
+
+
+  await say(
+    "Oh.",
+    700
+  );
+
+
+  await say(
+    "So THAT was the plan.",
+    1400
+  );
+
+
+  /* =======================================================
+     FLOWERS
+  ======================================================= */
+
+  document
+    .getElementById(
+      "row1"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  await wait(
+    400
+  );
+
+
+  document
+    .getElementById(
+      "row2"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  await wait(
+    400
+  );
+
+
+  document
+    .getElementById(
+      "row3"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  await wait(
+    900
+  );
+
+
+  /* =======================================================
+     WALK TO ROSE
+  ======================================================= */
+
+  await walkTo(
+    "at-rose",
+    2800,
+    true
+  );
+
+
+  await say(
+    "Not just any one...",
+    1200
+  );
+
+
+  await say(
+    "That one.",
+    950
+  );
+
+
+  /* =======================================================
+     PICK ROSE
+  ======================================================= */
+
+  walkerRig.classList.add(
+    "pick"
+  );
+
+
+  await wait(
+    850
+  );
+
+
+  specialRose.classList.add(
+    "picked"
+  );
+
+
+  pluckSound();
+
+
+  heldRose.classList.add(
+    "show"
+  );
+
+
+  walkerRig.classList.add(
+    "has-rose"
+  );
+
+
+  await wait(
+    850
+  );
+
+
+  walkerRig.classList.remove(
+    "pick"
+  );
+
+
+  /* =======================================================
+     WEATHER STOPS
+  ======================================================= */
+
+  outdoorRain.stop();
+
+
+  stopStorm();
+
+
+  outside.classList.add(
+    "clear"
+  );
+
+
+  await wait(
+    1800
+  );
+
+
+  await say(
+    "And NOW the rain stops.",
+    1400
+  );
+
+
+  await say(
+    "Perfect timing.",
+    900
+  );
+
+
+  /* =======================================================
+     RETURN
+  ======================================================= */
+
+  await walkTo(
+    "return",
+    4200,
+    true
+  );
+
+
+  await wait(
+    400
+  );
+
+
+  await say(
+    "Anyway...",
+    700
+  );
+
+
+  await say(
+    "there was someone he wanted to give this to.",
+    1800
+  );
+
+
+  /* =======================================================
+     OFFER
+  ======================================================= */
+
+  walkerRig.classList.add(
+    "offer"
+  );
+
+
+  await wait(
+    1200
+  );
+
+
+  await say(
+    "Someone kinda cute.",
+    950
+  );
+
+
+  await say(
+    "Actually...",
+    600
+  );
+
+
+  await say(
+    "very cute.",
+    900
+  );
+
+
+  await say(
+    `You, ${GIRL_NAME}.`,
+    1400
+  );
+
+
+  chime();
+
+
+  walker.style.opacity =
+    ".15";
+
+
+  farm.style.opacity =
+    ".08";
+
+
+  await wait(
+    700
+  );
+
+
+  final.classList.add(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+openBtn.addEventListener(
+  "click",
+  async () => {
+
+    initAudio();
+
+
+    if (
+      audioContext.state ===
+      "suspended"
+    ) {
+
+      await audioContext.resume();
+
+    }
+
+
+    story();
+
+  }
+);
+</script>
+
+</body>
+</html>
